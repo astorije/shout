@@ -41,14 +41,21 @@ button {
 .web-app-mode {
 	padding-top: 20px;
 }
+
+/* Tooltips */
 .tooltip-inner {
-	background: #fff;
+	background: #ececec;
 	border-radius: 2px;
-	color: #262c36;
+	color: #555;
+	font: 12px Lato, sans-serif;
 }
 .tooltip.top .tooltip-arrow {
-	border-top-color: #fff;
+	border-top-color: #ececec;
 }
+.tooltip.bottom .tooltip-arrow {
+	border-bottom-color: #ececec;
+}
+
 .btn {
 	border: 2px solid #84d1ff;
 	border: 2px solid #84ce88;
