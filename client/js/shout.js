@@ -45,7 +45,8 @@ $(function() {
 	}
 
 	$("#play").on("click", function() { pop.play(); });
-	$("#footer .icon").tooltip();
+
+	$("body").tooltip({ selector: "[data-toggle='tooltip']" });
 
 	$(".tse-scrollable").TrackpadScrollEmulator();
 
