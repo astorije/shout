@@ -395,6 +395,11 @@ $(function() {
 		}
 	});
 
+	viewport.on("click", ".otr", function () {
+		$(this).siblings(".otr").show();
+		$(this).hide();
+	});
+
 	var input = $("#input")
 		.history()
 		.tab(complete, {hint: false});

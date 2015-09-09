@@ -17,6 +17,10 @@
 			</button>
 		</div>
 		<span class="title">{{name}}</span>
+		{{#equal type "query"}}
+			<button class="icon otr stopped" data-toggle="tooltip" data-placement="bottom" title="Start encrypted mode (using OTR)"></button>
+			<button class="icon otr started" data-toggle="tooltip" data-placement="bottom" title="Stop encrypted mode"></button>
+		{{/equal}}
 		<span class="topic">{{{parse topic}}}</span>
 	</div>
 	<div class="chat">
