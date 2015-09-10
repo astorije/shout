@@ -10,6 +10,11 @@ module.exports = function(irc, network) {
 			return;
 		}
 
+		if (data.message.substring(0,4) == '?OTR') {
+			// Hide OTR messages
+			return;
+		}
+
 		var target = data.to;
 		if (target.toLowerCase() == irc.me.toLowerCase()) {
 			target = data.from;

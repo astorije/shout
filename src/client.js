@@ -12,6 +12,7 @@ var slate = require("slate-irc");
 var tls = require("tls");
 var EventEmitter = require('events').EventEmitter;
 var Helper = require("./helper");
+var OtrStore = require("./models/OtrStore");
 
 module.exports = Client;
 
@@ -32,7 +33,8 @@ var events = [
 	"quit",
 	"topic",
 	"welcome",
-	"whois"
+	"whois",
+	"otrmessage"
 ];
 var inputs = [
 	"action",
@@ -53,15 +55,16 @@ var inputs = [
 ];
 
 function Client(sockets, name, config) {
+	var client = this;
 	_.merge(this, {
 		activeChannel: -1,
 		config: config,
 		id: id++,
 		name: name,
 		networks: [],
-		sockets: sockets
+		sockets: sockets,
+		otrStore: new OtrStore(name, client),
 	});
-	var client = this;
 	crypto.randomBytes(48, function(err, buf) {
 		client.token = buf.toString("hex");
 	});
@@ -195,6 +198,10 @@ Client.prototype.connect = function(args) {
 			irc,
 			network
 		]);
+	});
+
+	this.on("join", function(args) {
+		this.otrStore.initChan(args);
 	});
 
 	irc.once("welcome", function() {
