@@ -2,6 +2,7 @@ var _ = require("lodash");
 var Chan = require("./models/chan");
 var crypto = require("crypto");
 var fs = require("fs");
+var util = require('util');
 var identd = require("./identd");
 var log = require("./log");
 var net = require("net");
@@ -9,6 +10,7 @@ var Msg = require("./models/msg");
 var Network = require("./models/network");
 var slate = require("slate-irc");
 var tls = require("tls");
+var EventEmitter = require('events').EventEmitter;
 var Helper = require("./helper");
 
 module.exports = Client;
@@ -73,8 +75,11 @@ function Client(sockets, name, config) {
 		});
 	}
 }
+util.inherits(Client, EventEmitter);
 
+/** An emitter that emits both locally and through network */
 Client.prototype.emit = function(event, data) {
+	EventEmitter.prototype.emit.apply(this, arguments);
 	if (this.sockets !== null) {
 		this.sockets.in(this.id).emit(event, data);
 	}
