@@ -24,6 +24,9 @@ function OtrStore(name, client) {
 OtrStore.prototype.initChan = function(args) {
 	var network_id = args.network;
 	var chan = args.chan;
+	var otrStore = this;
+	var client = this.client;
+
 	if (chan.type === Chan.Type.QUERY) {
 		var network = _.find(this.client.networks, {id: network_id});
 		var session = this.getSession(chan.name, network);
@@ -53,6 +56,34 @@ OtrStore.prototype.initChan = function(args) {
 			session.on('io', function(msg, meta) {
 				irc.send(chan.name, msg);
 			});
+
+			session.on('error', function(err, severity)  {
+				// severity is one of "warning" or "error"
+				var body = {type: severity, msg: err};
+				client.emit('otr', body);
+			});
+
+			session.on('status', function (state) {
+				var payload = null;
+
+				switch (state) {
+				case OTR.CONST.STATUS_AKE_INIT:
+					payload = {type: 'ake_started'};
+					break;
+				case OTR.CONST.STATUS_AKE_SUCCESS:
+					payload = {type: 'gone_secure'};
+					break;
+				case OTR.CONST.STATUS_END_OTR:
+					payload = {type: 'gone_plaintext'};
+					break;
+				}
+				if (payload) {
+					client.emit('otr', payload);
+				}
+				// We do not catch SEND_QUERY as it will be followed by an
+				// AKE_INIT ? Still have to figure out.
+			});
+
 			this.registerSession(chan.name, network, session);
 		}
 	}
