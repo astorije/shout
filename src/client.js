@@ -46,6 +46,7 @@ var inputs = [
 	"msg",
 	"nick",
 	"notice",
+	"otr",
 	"part",
 	"quit",
 	"raw",
