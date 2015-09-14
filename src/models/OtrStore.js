@@ -11,7 +11,7 @@ module.exports = OtrStore;
  */
 function OtrStore(name, client) {
 	this.name = name;
-	this.session = {};
+	this.sessions = {};
 	// Do not use the _.merge "pattern" : we want shallow copy
 	this.client = client;
 }
