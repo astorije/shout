@@ -1166,6 +1166,16 @@ button.icon {
 	content: "\f023";
 	color: #50a656;
 }
-.otr.started {
+.otr.errored:before {
+	content: "\f05e";
+	color: #e74c3c;
+}
+.otr.waiting:before {
+	content: "\f110";
+	color: #ccc;
+}
+.otr.started,
+.otr.errored,
+.otr.waiting {
 	display: none;
 }

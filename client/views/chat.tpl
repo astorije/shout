@@ -20,6 +20,8 @@
 		{{#equal type "query"}}
 			<button class="icon otr stopped" data-toggle="tooltip" data-placement="bottom" title="Start encrypted mode (using OTR)"></button>
 			<button class="icon otr started" data-toggle="tooltip" data-placement="bottom" title="Stop encrypted mode"></button>
+			<button class="icon otr waiting" data-toggle="tooltip" data-placement="bottom" title="Encrypted mode is starting"></button>
+			<button class="icon otr errored" data-toggle="tooltip" data-placement="bottom" title="Encrypted mode has errored"></button>
 		{{/equal}}
 		<span class="topic">{{{parse topic}}}</span>
 	</div>
