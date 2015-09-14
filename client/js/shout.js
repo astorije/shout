@@ -395,8 +395,13 @@ $(function() {
 		}
 	});
 
-	viewport.on("click", ".otr", function () {
-		$(this).siblings(".otr").show();
+	viewport.on("click", ".otr.stopped", function () {
+		$(this).siblings(".otr.waiting").show();
+		$(this).hide();
+	});
+
+	viewport.on("click", ".otr.waiting", function () {
+		$(this).siblings(".otr.stopped").show();
 		$(this).hide();
 	});
 
