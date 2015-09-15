@@ -8,7 +8,11 @@ module.exports = function(irc, network) {
 		if (!client.otrStore.isOtrMessage(data.message)) {
 			return;
 		}
-		var otrSession = client.otrStore.getSession(data.from, network);
+
+		var otrSession = client.otrStore.getSession(
+			network.getMessageChanName(data),
+			network
+		);
 		otrSession.receiveMsg(data.message);
 	});
 };
