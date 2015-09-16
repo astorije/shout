@@ -12,7 +12,7 @@ var slate = require("slate-irc");
 var tls = require("tls");
 var EventEmitter = require('events').EventEmitter;
 var Helper = require("./helper");
-var OtrStore = require("./models/OtrStore");
+var OtrStore = require("./models/otrStore");
 
 module.exports = Client;
 
