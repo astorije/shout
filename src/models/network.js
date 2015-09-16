@@ -53,6 +53,28 @@ Network.prototype.export = function() {
 	return network;
 };
 
+/**
+ * Is this message from our side of the network ?
+ *
+ * @param message data (eg. {from: "me", to:"#foo", message: "hi"})
+ */
+Network.prototype.isMessageFromMe = function(msg) {
+	return msg.from.toLowerCase() === this.irc.me.toLowerCase();
+};
+
+/**
+ * Gets the chan name from a message
+ *
+ * @param message data (eg. {from: "me", to:"#foo", message: "hi"})
+ */
+Network.prototype.getMessageChanName = function(msg) {
+	if (this.isMessageFromMe(msg)) {
+		return msg.to;
+	} else {
+		return msg.from;
+	}
+};
+
 function prettify(host) {
 	var name = capitalize(host.split(".")[1]);
 	if (!name) {
