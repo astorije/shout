@@ -8,17 +8,9 @@ module.exports = function(irc, network) {
 		if (data === null) {
 			return;
 		}
-		var chan = _.findWhere(network.channels, {name: data.nickname});
-		if (typeof chan === "undefined") {
-			chan = new Chan({
-				type: Chan.Type.QUERY,
-				name: data.nickname
-			});
-			network.channels.push(chan);
-			client.emit("join", {
-				network: network.id,
-				chan: chan
-			});
+		var chan = client.getQuery(data.nickname, network);
+		if (chan === null) {
+			chan = client.startQuery(data.nickname, network);
 		}
 		var prefix = {
 			hostname: "from",

@@ -391,3 +391,39 @@ Client.prototype.save = function(force) {
 		);
 	});
 };
+
+/*
+ * Gets a Query with someone if it already exists
+ *
+ * @param {string} nick - remote user nick
+ * @param {Network} network
+ * @returns {Chan} - or null, if no matching chan exists
+ */
+Client.prototype.getQuery = function(nick, network) {
+	var chan = _.findWhere(network.channels, {name: nick});
+	if (chan === undefined) {
+		return null;
+	} else {
+		return chan;
+	}
+};
+
+/*
+ * Register a new query conversation with another user
+ *
+ * @param {string} nick - remote user nick
+ * @param {Network} network
+ * @returns {Chan} - the freshly created an registered Chan
+ */
+Client.prototype.startQuery = function(nick, network) {
+	var chan = new Chan({
+		type: Chan.Type.QUERY,
+		name: nick
+	});
+	network.channels.push(chan);
+	this.emit("join", {
+		network: network.id,
+		chan: chan
+	});
+	return chan;
+};

@@ -20,17 +20,9 @@ module.exports = function(irc, network) {
 			target = data.from;
 		}
 
-		var chan = _.findWhere(network.channels, {name: target});
-		if (typeof chan === "undefined") {
-			chan = new Chan({
-				type: Chan.Type.QUERY,
-				name: data.from
-			});
-			network.channels.push(chan);
-			client.emit("join", {
-				network: network.id,
-				chan: chan
-			});
+		var chan = client.getQuery(target, network);
+		if (chan === null) {
+			chan = client.startQuery(target, network);
 		}
 
 		var type = "";
