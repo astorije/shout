@@ -11,7 +11,7 @@ module.exports = function(irc, network) {
 
 		var otrSession = client.otrStore.getSession(
 			network.getMessageChanName(data),
-			network
+			network.host
 		);
 		otrSession.receiveMsg(data.message);
 	});

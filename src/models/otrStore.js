@@ -29,7 +29,8 @@ OtrStore.prototype.initChan = function(args) {
 
 	if (chan.type === Chan.Type.QUERY) {
 		var network = _.find(this.client.networks, {id: network_id});
-		var session = this.getSession(chan.name, network);
+		var host = network.host;
+		var session = this.getSession(chan.name, host);
 		var irc = network.irc;
 		if (session === undefined) {
 			session = new OTR({
@@ -84,18 +85,18 @@ OtrStore.prototype.initChan = function(args) {
 				// AKE_INIT ? Still have to figure out.
 			});
 
-			this.registerSession(chan.name, network, session);
+			this.registerSession(chan.name, host, session);
 		}
 	}
 };
 
-OtrStore.prototype.getSession = function(nick, network) {
-	var qualifiedUser = nick + '@' + network.host;
+OtrStore.prototype.getSession = function(nick, host) {
+	var qualifiedUser = nick + '@' + host;
 	return this.sessions[qualifiedUser];
 };
 
-OtrStore.prototype.registerSession = function(nick, network, session) {
-	var qualifiedUser = nick + '@' + network.host;
+OtrStore.prototype.registerSession = function(nick, host, session) {
+	var qualifiedUser = nick + '@' + host;
 	this.sessions[qualifiedUser] = session;
 };
 

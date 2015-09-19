@@ -20,7 +20,7 @@ module.exports = function(network, chan, cmd, args) {
 		target = chan.name;
 	}
 	var msg = args.join(" ");
-	var otrSession = client.otrStore.getSession(chan.name, network);
+	var otrSession = client.otrStore.getSession(chan.name, network.host);
 	if (otrSession && (otrSession.msgstate === OTR.CONST.MSGSTATE_ENCRYPTED)) {
 		otrSession.sendMsg(msg);
 	} else {

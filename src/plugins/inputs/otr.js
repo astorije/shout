@@ -8,7 +8,7 @@ module.exports = function(network, chan, cmd, args) {
 	var subCmd = args[0];
 	var client = this;
 	var otrStore = client.otrStore;
-	var session = otrStore.getSession(chan.name, network);
+	var session = otrStore.getSession(chan.name, network.host);
 
 	if (subCmd === "init") {
 		session.sendQueryMsg();
