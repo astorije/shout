@@ -9,8 +9,15 @@ module.exports = function(irc, network) {
 			return;
 		}
 
+		var chanName = network.getMessageChanName(data);
+
+		var chan = client.getQuery(chanName, network);
+		if (chan === null) {
+			chan = client.startQuery(chanName, network);
+		}
+
 		var otrSession = client.otrStore.getSession(
-			network.getMessageChanName(data),
+			chanName,
 			network.host
 		);
 		otrSession.receiveMsg(data.message);
